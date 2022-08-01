@@ -33,7 +33,7 @@ export class MusicService {
     });
     return result;
   }
-  async deleteMusic(id: number) {
+  async deleteMusic(id: string) {
     const res = await this.musicModel.findOne({
       where: {
         id: id,

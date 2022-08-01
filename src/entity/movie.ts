@@ -1,8 +1,8 @@
 import { Column, Entity } from "typeorm";
 import { Common } from "./common";
 
-@Entity('music')
-export class Music extends Common {
+@Entity('movie')
+export class Movie extends Common {
 
   @Column({
     length: 100,
