@@ -6,31 +6,45 @@ import { Repository } from 'typeorm';
 export class MusicService {
   @InjectEntityModel(Music)
   musicModel: Repository<Music>;
+
   async getMusicList() {
-    return {
-      name: 'lfp',
-      author: 'l123',
-      date: '2022-07-31',
-    };
+    const result = await this.musicModel.findAndCount();
+    return result;
   }
-  async saveMusic() {
-    // create a entity object
+  async saveMusic(data: Music) {
     const music = new Music();
-    music.name = '渡口';
-    music.author = '蔡琴';
-    music.date = '2022-07-31';
-    // save entity
+    music.name = data.name;
+    music.author = data.author;
+    music.date = data.date;
     const musicResult = await this.musicModel.save(music);
-    // save success
-    console.log('music id = ', musicResult.id);
+    console.log(musicResult, 'musicResult');
+    
+    const [result,count] = await this.musicModel.findAndCount()
+    return {
+      result,
+      count
+    }
   }
-  async findMusicOne() {
+  async findMusicOne(params: string) {
     const result = await this.musicModel.findOne({
       where: {
-        author: '蔡琴',
+        author: params,
       },
     });
-    console.log(result, 'result');
     return result;
+  }
+  async deleteMusic(id: number) {
+    const res = await this.musicModel.findOne({
+      where: {
+        id: id,
+      },
+    });
+    await this.musicModel.remove(res);
+    const [result,count] = await this.musicModel.findAndCount()
+    return {
+      result,
+      count
+    }
+
   }
 }
