@@ -8,8 +8,11 @@ export class MusicService {
   musicModel: Repository<Music>;
 
   async getMusicList() {
-    const result = await this.musicModel.findAndCount();
-    return result;
+    const [result,count] = await this.musicModel.findAndCount()
+    return {
+      result,
+      count
+    }
   }
   async saveMusic(data: Music) {
     const music = new Music();
@@ -25,14 +28,14 @@ export class MusicService {
       count
     }
   }
-  async findMusicOne(params: string) {
-    const result = await this.musicModel.findOne({
-      where: {
-        author: params,
-      },
-    });
-    return result;
-  }
+  // async findMusicOne(params: string) {
+  //   const result = await this.musicModel.findOne({
+  //     where: {
+  //       author: params,
+  //     },
+  //   });
+  //   return result;
+  // }
   async deleteMusic(id: number) {
     const res = await this.musicModel.findOne({
       where: {
@@ -56,8 +59,7 @@ export class MusicService {
     update.name = params.name;
     update.author = params.author;
     update.date = params.date;
-    this.musicModel.save(update)
-
+    await this.musicModel.save(update)
     const [result,count] = await this.musicModel.findAndCount()
     return {
       result,

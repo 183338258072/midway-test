@@ -13,17 +13,16 @@ export class MusicController {
 
   @Get('/all')
   async getMusicAll() {
-    const [data, count] = await this.musicService.getMusicList();
-    console.log(data, count);
-    return { success: true, message: 'OK', data,total: count };
+    const {result, count} = await this.musicService.getMusicList();
+    return { success: true, message: 'OK', data:result,total: count };
   }
 
-  @Get('/find')
-  async findMusic(@Query('params') params: string) {
-    const music = await this.musicService.findMusicOne(params);
-    console.log(music);
-    return { success: true, message: 'OK', data: music };
-  }
+  // @Get('/find')
+  // async findMusic(@Query('params') params: string) {
+  //   const music = await this.musicService.findMusicOne(params);
+  //   console.log(music);
+  //   return { success: true, message: 'OK', data: music };
+  // }
 
   @Post('/save')
   async saveMusic(@Body() music:Music) {
