@@ -8,8 +8,8 @@ export class MovieService {
   @InjectEntityModel(Movie)
   movieModel: Repository<Movie>;
 
-  async getMovieAll() {
-    const res = await this.movieModel.findAndCount()
-    return res;
+  async getMoviesAll() {
+    const [result,count] = await this.movieModel.findAndCount()
+    return {result,count };
   }
 }

@@ -12,7 +12,7 @@ export class MovieController {
 
   @Get('/all')
   async getMovieAll() {
-    const [result, total] = await this.movieService.getMovieAll()
-    return { success: true, message: 'OK', data: result,total: total };
+    const {result, count} = await this.movieService.getMoviesAll()
+    return { success: true, message: 'OK', data: result,total: count };
   }
 }
