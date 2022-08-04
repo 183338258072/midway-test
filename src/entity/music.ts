@@ -10,6 +10,8 @@ export class Music extends Common {
   name: string;
 
   @Column()
+  date: string
+  @Column()
   author: string;
 
 }

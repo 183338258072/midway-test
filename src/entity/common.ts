@@ -1,10 +1,7 @@
-import {  CreateDateColumn,  PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {   PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 export abstract class Common {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @CreateDateColumn()
-  date: string;
+  id: number;
 
   @UpdateDateColumn()
   updateDate:string;

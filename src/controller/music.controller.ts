@@ -33,11 +33,18 @@ export class MusicController {
     }
   }
   @Del('/delete')
-  async deleteMusic(@Query('id') id:string) {
+  async deleteMusic(@Query('id') id:number) {
     const {result,count} = await this.musicService.deleteMusic(id)
     return {
       success: true, message: '成功',data: result,total: count
     }
+  }
+  @Post('/update')
+  async updateMusic(@Body() music:Music) {
     
+    const {result,count} = await this.musicService.updateMusic(music)
+    return {
+      success: true, message: '成功',data: result,total: count
+    }
   }
 }

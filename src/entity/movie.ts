@@ -8,6 +8,8 @@ export class Movie extends Common {
     length: 100,
   })
   name: string;
+  @Column()
+  date: string
 
   @Column()
   author: string;

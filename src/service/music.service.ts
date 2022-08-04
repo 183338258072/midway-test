@@ -33,7 +33,7 @@ export class MusicService {
     });
     return result;
   }
-  async deleteMusic(id: string) {
+  async deleteMusic(id: number) {
     const res = await this.musicModel.findOne({
       where: {
         id: id,
@@ -46,5 +46,22 @@ export class MusicService {
       count
     }
 
+  }
+  async updateMusic(params:any) {
+    const update = await this.musicModel.findOne({
+      where: {
+        name: params.name,
+      },
+    });
+    update.name = params.name;
+    update.author = params.author;
+    update.date = params.date;
+    this.musicModel.save(update)
+
+    const [result,count] = await this.musicModel.findAndCount()
+    return {
+      result,
+      count
+    }
   }
 }
