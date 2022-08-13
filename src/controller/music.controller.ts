@@ -32,7 +32,7 @@ export class MusicController {
     }
   }
   @Del('/delete')
-  async deleteMusic(@Query('id') id:number) {
+  async deleteMusic(@Query('id') id:string) {
     const {result,count} = await this.musicService.deleteMusic(id)
     return {
       success: true, message: '成功',data: result,total: count

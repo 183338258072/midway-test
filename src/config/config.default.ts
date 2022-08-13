@@ -1,4 +1,6 @@
 import { MidwayConfig } from '@midwayjs/core';
+import { Book } from '../entity/book';
+import { Movie } from '../entity/movie';
 import { Music } from '../entity/music';
 
 export default {
@@ -21,7 +23,7 @@ export default {
         database: 'service',
         synchronize: true, // 如果第一次使用，不存在表，有同步的需求可以写 true
         logging: false,
-        entities: [Music],
+        entities: [Music,Movie,Book],
       },
     },
   },

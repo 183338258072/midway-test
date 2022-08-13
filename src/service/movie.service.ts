@@ -12,4 +12,28 @@ export class MovieService {
     const [result,count] = await this.movieModel.findAndCount()
     return {result,count };
   }
+  async saveMovie(data:Movie) {
+    const movie = new Movie()
+    movie.author = data.author;
+    movie.name = data.name;
+    movie.date = data.date;
+    await this.movieModel.save(movie)
+    const [result, count ] =  await this.movieModel.findAndCount()
+    return {
+      result, count
+    }
+  }
+  async deleteMovie(id) {
+    const res = await this.movieModel.find({
+      where: {
+        id
+      }
+    })
+    await this.movieModel.remove(res)
+    const [ result, count] = await this.movieModel.findAndCount()
+    return { 
+      result, count
+    }
+  }
+
 }

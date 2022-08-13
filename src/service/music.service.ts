@@ -19,9 +19,7 @@ export class MusicService {
     music.name = data.name;
     music.author = data.author;
     music.date = data.date;
-    const musicResult = await this.musicModel.save(music);
-    console.log(musicResult, 'musicResult');
-    
+    await this.musicModel.save(music);
     const [result,count] = await this.musicModel.findAndCount()
     return {
       result,
@@ -36,7 +34,7 @@ export class MusicService {
   //   });
   //   return result;
   // }
-  async deleteMusic(id: number) {
+  async deleteMusic(id: string) {
     const res = await this.musicModel.findOne({
       where: {
         id: id,
