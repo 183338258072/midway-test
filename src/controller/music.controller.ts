@@ -1,4 +1,12 @@
-import { Body, Controller, Del, Get, Inject, Post, Query } from '@midwayjs/decorator';
+import {
+  Body,
+  Controller,
+  Del,
+  Get,
+  Inject,
+  Post,
+  Query,
+} from '@midwayjs/decorator';
 import { Context } from 'vm';
 import { Music } from '../entity/music';
 import { MusicService } from '../service/music.service';
@@ -13,37 +21,45 @@ export class MusicController {
 
   @Get('/all')
   async getMusicAll() {
-    const {result, count} = await this.musicService.getMusicList();
-    return { success: true, message: 'OK', data:result,total: count };
+    const { result, count } = await this.musicService.getMusicList();
+    return { success: true, message: 'OK', data: result, total: count };
   }
 
-  // @Get('/find')
-  // async findMusic(@Query('params') params: string) {
-  //   const music = await this.musicService.findMusicOne(params);
-  //   console.log(music);
-  //   return { success: true, message: 'OK', data: music };
-  // }
+  @Get('/find')
+  async findMusic(@Query('id') id: string) {
+    const music = await this.musicService.findMusicOne(id);
+    console.log(music);
+    return { success: true, message: 'OK', data: music };
+  }
 
   @Post('/save')
-  async saveMusic(@Body() music:Music) {
-    const {result,count} = await this.musicService.saveMusic(music)
+  async saveMusic(@Body() music: Music) {
+    const { result, count } = await this.musicService.saveMusic(music);
     return {
-      success: true, message: '成功',data: result,total: count
-    }
+      success: true,
+      message: '成功',
+      data: result,
+      total: count,
+    };
   }
   @Del('/delete')
-  async deleteMusic(@Query('id') id:string) {
-    const {result,count} = await this.musicService.deleteMusic(id)
+  async deleteMusic(@Query('id') id: string) {
+    const { result, count } = await this.musicService.deleteMusic(id);
     return {
-      success: true, message: '成功',data: result,total: count
-    }
+      success: true,
+      message: '成功',
+      data: result,
+      total: count,
+    };
   }
   @Post('/update')
-  async updateMusic(@Body() music:Music) {
-    
-    const {result,count} = await this.musicService.updateMusic(music)
+  async updateMusic(@Body() music: Music) {
+    const { result, count } = await this.musicService.updateMusic(music);
     return {
-      success: true, message: '成功',data: result,total: count
-    }
+      success: true,
+      message: '成功',
+      data: result,
+      total: count,
+    };
   }
 }

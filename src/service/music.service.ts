@@ -1,4 +1,4 @@
-import { Provide } from '@midwayjs/decorator';
+import { Provide, sleep } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Music } from '../entity/music';
 import { Repository } from 'typeorm';
@@ -8,11 +8,11 @@ export class MusicService {
   musicModel: Repository<Music>;
 
   async getMusicList() {
-    const [result,count] = await this.musicModel.findAndCount()
+    const [result, count] = await this.musicModel.findAndCount();
     return {
       result,
-      count
-    }
+      count,
+    };
   }
   async saveMusic(data: Music) {
     const music = new Music();
@@ -20,20 +20,23 @@ export class MusicService {
     music.author = data.author;
     music.date = data.date;
     await this.musicModel.save(music);
-    const [result,count] = await this.musicModel.findAndCount()
+    const [result, count] = await this.musicModel.findAndCount();
     return {
       result,
-      count
-    }
+      count,
+    };
   }
-  // async findMusicOne(params: string) {
-  //   const result = await this.musicModel.findOne({
-  //     where: {
-  //       author: params,
-  //     },
-  //   });
-  //   return result;
-  // }
+  async findMusicOne(id: string) {
+    const result = await this.musicModel.findOne({
+      where: {
+        name: id,
+      },
+    });
+    if (id === '2') {
+      sleep(2000);
+    }
+    return result;
+  }
   async deleteMusic(id: string) {
     const res = await this.musicModel.findOne({
       where: {
@@ -41,14 +44,13 @@ export class MusicService {
       },
     });
     await this.musicModel.remove(res);
-    const [result,count] = await this.musicModel.findAndCount()
+    const [result, count] = await this.musicModel.findAndCount();
     return {
       result,
-      count
-    }
-
+      count,
+    };
   }
-  async updateMusic(params:any) {
+  async updateMusic(params: any) {
     const update = await this.musicModel.findOne({
       where: {
         name: params.name,
@@ -57,11 +59,11 @@ export class MusicService {
     update.name = params.name;
     update.author = params.author;
     update.date = params.date;
-    await this.musicModel.save(update)
-    const [result,count] = await this.musicModel.findAndCount()
+    await this.musicModel.save(update);
+    const [result, count] = await this.musicModel.findAndCount();
     return {
       result,
-      count
-    }
+      count,
+    };
   }
 }
